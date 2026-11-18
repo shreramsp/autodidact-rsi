@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "{\"digest_size\": 28, \"group_by\": \"none\", \"focus_mode\": \"worst_label\", \"new_tests\": [{\"text\": \"Hello, my name is John Doe and my order is #482910 for the Widget X priced at $49.99.\", \"pii\": [[\"John Doe\", \"NAME\"]]}, {\"text\": \"Please ship the replacement to 123 Main St, Springfield, IL 62701. Order reference is P-99482.\", \"pii\": [[\"123 Main St, Springfield, IL 62701\", \"ADDRESS\"]]}, {\"text\": \"My email is test.user+filter@domain.co.uk and my phone is (555) 123-4567. Part #8847-B.\", \"pii\": [[\"test.user+filter@domain.co.uk\", \"EMAIL\"], [\"(555) 123-4567\", \"PHONE\"]]}, {\"text\": \"You can reach Robert Smith at robert.smith@example.com or via mobile at 202.555.0143.\", \"pii\": [[\"Robert Smith\", \"NAME\"], [\"robert.smith@example.com\", \"EMAIL\"], [\"202.555.0143\", \"PHONE\"]]}], \"rationale\": \"Focus on the worst labels (NAME and ADDRESS) while introducing diverse test formats including order and part number traps.\"}",
+ "input_tokens": 2292,
+ "output_tokens": 337,
+ "cost_usd": 0.0015301
+}

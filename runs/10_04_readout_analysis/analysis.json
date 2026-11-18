@@ -1,0 +1,77 @@
+{
+ "coefficients": [
+  [
+   "parent_rate",
+   0.21582595090750656
+  ],
+  [
+   "funcs_added",
+   0.0553302638266521
+  ],
+  [
+   "regex_removed",
+   0.029919440467704155
+  ],
+  [
+   "regex_added",
+   -0.018309666154820364
+  ],
+  [
+   "labels_touched",
+   0.01771388566790193
+  ],
+  [
+   "lines_deleted",
+   -0.0145257370180157
+  ],
+  [
+   "lines_added",
+   -0.006186406638832217
+  ],
+  [
+   "context_words_added",
+   0.005513779525327491
+  ],
+  [
+   "funcs_removed",
+   0.0
+  ]
+ ],
+ "rho_lines_vs_abs": -0.48556231003039513,
+ "rho_lines_vs_gain": 0.33955709943551887,
+ "feature_sets": [
+  {
+   "features": "parent_rate + 8 diff features",
+   "mean_heldout_f1_of_pick": 0.7056881383994112,
+   "spearman": -0.3134920634920635
+  },
+  {
+   "features": "parent_rate + 4 diff features",
+   "mean_heldout_f1_of_pick": 0.7234380651020935,
+   "spearman": -0.23412698412698418
+  },
+  {
+   "features": "parent_rate only (ablation)",
+   "mean_heldout_f1_of_pick": 0.7272516107945115,
+   "spearman": -0.04761904761904763
+  }
+ ],
+ "training_curve": [
+  {
+   "train_fraction": 0.25,
+   "mean_heldout_f1_of_pick": 0.7287691533750973
+  },
+  {
+   "train_fraction": 0.5,
+   "mean_heldout_f1_of_pick": 0.7288484398293529
+  },
+  {
+   "train_fraction": 0.75,
+   "mean_heldout_f1_of_pick": 0.7112163694282552
+  },
+  {
+   "train_fraction": 1.0,
+   "mean_heldout_f1_of_pick": 0.7056881383994112
+  }
+ ]
+}

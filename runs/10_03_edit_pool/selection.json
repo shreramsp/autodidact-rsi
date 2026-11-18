@@ -1,0 +1,61 @@
+{
+ "table": [
+  {
+   "strategy": "oracle",
+   "mean_heldout_f1_of_pick": 0.8150309070257725,
+   "regret_vs_oracle": 0.0,
+   "evals_per_decision": 3200,
+   "picks": [
+    "g1c0",
+    "g2c1",
+    "g3c0",
+    "g4c2",
+    "g5c6",
+    "g6c0"
+   ]
+  },
+  {
+   "strategy": "steering-only",
+   "mean_heldout_f1_of_pick": 0.8140858053690571,
+   "regret_vs_oracle": 0.0009451016567154635,
+   "evals_per_decision": 880,
+   "picks": [
+    "g1c0",
+    "g2c1",
+    "g3c0",
+    "g4c2",
+    "g5c3",
+    "g6c0"
+   ]
+  },
+  {
+   "strategy": "budget readout",
+   "mean_heldout_f1_of_pick": 0.7056881383994112,
+   "regret_vs_oracle": 0.10934276862636128,
+   "evals_per_decision": 400,
+   "picks": [
+    "g1c5",
+    "g2c2",
+    "g3c1",
+    "g4c6",
+    "g5c1",
+    "g6c1"
+   ]
+  },
+  {
+   "strategy": "random",
+   "mean_heldout_f1_of_pick": 0.7297438331367202,
+   "regret_vs_oracle": 0.08528707388905232,
+   "evals_per_decision": 400,
+   "picks": [
+    "g1c6",
+    "g2c6",
+    "g3c0",
+    "g4c4",
+    "g5c7",
+    "g6c6"
+   ]
+  }
+ ],
+ "readout_spearman": -0.31349206349206354
+}

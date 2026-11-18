@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "{\"digest_size\": 32, \"group_by\": \"label\", \"focus_mode\": \"worst_label\", \"new_tests\": [{\"text\": \"Hello support, my tracking number is 9823-4412-9918 and my shipping address is 1049 Washington Blvd Apt 3B, Chicago, IL 60607.\", \"pii\": [[\"1049 Washington Blvd Apt 3B, Chicago, IL 60607\", \"ADDRESS\"]]}, {\"text\": \"Please charge my credit card 4111222233334444 for order #54920. My email is user.name+tag@sub.domain.co.uk.\", \"pii\": [[\"4111222233334444\", \"CREDIT_CARD\"], [\"user.name+tag@sub.domain.co.uk\", \"EMAIL\"]]}], \"rationale\": \"Focus on ADDRESS and CREDIT_CARD as they currently have zero or very low F1, grouping by label to help the agent target specific failures.\"}",
+ "input_tokens": 3065,
+ "output_tokens": 252,
+ "cost_usd": 0.0015495
+}

@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "INTENT: {\"target\": \"SSN\", \"change\": \"Improve SSN pattern matching to handle space-separated and unhyphenated 9-digit numbers while reducing false positives on part numbers by requiring explicit context or standard formatting.\", \"expected\": \"SSN recall and precision will both improve by capturing spaced/unhyphenated SSNs near keywords while ignoring part numbers.\"}\n```python\n\"\"\"Improved PII redactor focusing on SSN detection.\"\"\"\nimport re\n\nPATTERNS = [\n    (\"EMAIL\", re.compile(r\"[\\w.]+@[\\w]+\\.\\w+\")),\n    (\"PHONE\", re.compile(r\"\\d{3}-\\d{3}-\\d{4}\")),\n    (\"SSN\", re.compile(\n        r\"(?i)(?:ssn|social security number|social security)[:\\s]*\\b(\\d{3}[-\\s]?\\d{2}[-\\s]?\\d{4}|\\d{9})\\b\"\n    )),\n    (\"CREDIT_CARD\", re.compile(r\"\\b\\d{16}\\b\")),\n]\n\n\ndef find_pii(text):\n    \"\"\"Return a list of (start, end, label) spans that contain PII.\"\"\"\n    spans = []\n    for label, pattern in PATTERNS:\n        for m in pattern.finditer(text):\n            # If the pattern has a capture group (like SSN with context), use the group span\n            if m.groups():\n                start, end = m.span(1)\n            else:\n                start, end = m.span()\n            spans.append((start, end, label))\n    return spans\n```",
+ "input_tokens": 2547,
+ "output_tokens": 369,
+ "cost_usd": 0.0016866
+}

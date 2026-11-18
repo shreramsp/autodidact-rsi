@@ -1,0 +1,128 @@
+{
+ "anomaly_counts": [
+  {
+   "version": 1,
+   "loop": "naive",
+   "recurrence": 5,
+   "opposing": 9,
+   "mismatch": 7,
+   "accepted": 4,
+   "heldout_f1": 0.7406
+  },
+  {
+   "version": 1,
+   "loop": "SO-RSI",
+   "recurrence": 8,
+   "opposing": 9,
+   "mismatch": 3,
+   "accepted": 2,
+   "heldout_f1": 0.7
+  },
+  {
+   "version": 2,
+   "loop": "naive",
+   "recurrence": 5,
+   "opposing": 1,
+   "mismatch": 7,
+   "accepted": 4,
+   "heldout_f1": 0.7406
+  },
+  {
+   "version": 2,
+   "loop": "SO-RSI",
+   "recurrence": 8,
+   "opposing": 8,
+   "mismatch": 1,
+   "accepted": 2,
+   "heldout_f1": 0.7
+  },
+  {
+   "version": 3,
+   "loop": "naive",
+   "recurrence": 5,
+   "opposing": 1,
+   "mismatch": 7,
+   "accepted": 4,
+   "heldout_f1": 0.7406
+  },
+  {
+   "version": 3,
+   "loop": "SO-RSI",
+   "recurrence": 8,
+   "opposing": 8,
+   "mismatch": 6,
+   "accepted": 2,
+   "heldout_f1": 0.7
+  },
+  {
+   "version": 4,
+   "loop": "naive",
+   "recurrence": 5,
+   "opposing": 1,
+   "mismatch": 7,
+   "accepted": 4,
+   "heldout_f1": 0.7406
+  },
+  {
+   "version": 4,
+   "loop": "SO-RSI",
+   "recurrence": 5,
+   "opposing": 4,
+   "mismatch": 6,
+   "accepted": 5,
+   "heldout_f1": 0.7907
+  }
+ ],
+ "probes": [
+  {
+   "round": 2,
+   "anomaly": "mismatch",
+   "label": "NAME",
+   "root_cause": "The phrase \"I'm <<talking about>>\" matches the introduction pattern `I'm\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})` because \"talking about\" follows \"I'm\", and names with accented characters (e.g., 'Rosa-Maria') or compound names (e.g., 'Emilia Cerv\u00e1ntez') are missed due to restrictive character classes or incomplete capturing groups.",
+   "rule": "Name regex patterns must explicitly exclude common verb phrases like \"talking about\" after \"I'm\" and include hyphenated surnames and accented characters in all name capturing groups.",
+   "action": "KEEP_GOING",
+   "next_edit_on_label": "round 3: rejected",
+   "rule_status": "refuted",
+   "why_it_helps": "checks whether our model of the data or the metric is wrong, not just the code"
+  },
+  {
+   "round": 3,
+   "anomaly": "opposing",
+   "label": "NAME",
+   "root_cause": "The introduction pattern `I'm` greedily captures non-name phrases like 'talking about' because the regex `\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b` allows any words instead of capitalized names. Simultaneously, several sign-off and hyphen patterns fail to match accented characters like 'Rosa-Maria' and full names preceded by specific punctuation or newlines.",
+   "rule": "All NAME capture groups for introductions and third-party references must require capitalized words (`[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*`), while properly supporting hyphenated names and lowercase prefixes like `de la`.",
+   "action": "KEEP_GOING",
+   "next_edit_on_label": "round 4: rejected",
+   "rule_status": "refuted",
+   "why_it_helps": "names the two requirements pulling in opposite directions (precision vs recall)"
+  },
+  {
+   "round": 4,
+   "anomaly": "recurrence",
+   "label": "NAME",
+   "root_cause": "The `I'm` introduction pattern incorrectly captures non-name verb phrases like \"talking about\" because it permits any capitalized words after `I'm`, and several missed names fail because the third-party and sign-off patterns do not account for accented characters, hyphens, or multi-word names (e.g., 'Rosa-Maria', 'Emilia Cerv\u00e1ntez').",
+   "rule": "Name regex patterns following introductions or third-party roles must explicitly restrict captured tokens to valid name characters (including hyphens and accents) while excluding common verb phrases like \"talking about\".",
+   "action": "KEEP_GOING",
+   "next_edit_on_label": "round 5: rejected",
+   "rule_status": "supported",
+   "why_it_helps": "stops repeating a fix that already failed; asks which assumption the fixes share"
+  },
+  {
+   "round": 6,
+   "anomaly": "mismatch",
+   "label": "PHONE",
+   "root_cause": "The current PHONE regex overly matches 10-digit numbers (like order numbers) because it does not require international country codes, punctuation separators, or preceding contact context, causing massive false positives.",
+   "rule": "The PHONE pattern must require either an explicit international prefix (+1, +44, +91) or strict phone punctuation/separators (dashes, dots, parentheses, or spaces between digit groups) to avoid matching 10-digit order numbers.",
+   "action": "KEEP_GOING",
+   "next_edit_on_label": "round 7: rejected",
+   "rule_status": "supported",
+   "why_it_helps": "checks whether our model of the data or the metric is wrong, not just the code"
+  }
+ ],
+ "simultaneous": {
+  "0": 2,
+  "1": 3,
+  "2": 3,
+  "3": 2
+ }
+}

@@ -1,0 +1,155 @@
+{
+ "trace": [
+  {
+   "round": 1,
+   "node": "recall_hunter",
+   "candidates": "recall_hunter 0.416, NAME 0.224, PHONE 0.080, SSN 0.060",
+   "accepted": true,
+   "steering": 0.308411214953271
+  },
+  {
+   "round": 2,
+   "node": "recall_hunter",
+   "candidates": "recall_hunter 0.484, NAME 0.217, PHONE 0.092, SSN 0.058",
+   "accepted": true,
+   "steering": 0.3879310344827586
+  },
+  {
+   "round": 3,
+   "node": "recall_hunter",
+   "candidates": "recall_hunter 0.490, NAME 0.219, PHONE 0.093, SSN 0.059",
+   "accepted": true,
+   "steering": 0.821917808219178
+  },
+  {
+   "round": 4,
+   "node": "recall_hunter",
+   "candidates": "recall_hunter 0.355, precision_guard 0.278, PHONE 0.175, NAME 0.156",
+   "accepted": true,
+   "steering": 0.8417508417508417
+  },
+  {
+   "round": 5,
+   "node": "precision_guard",
+   "candidates": "precision_guard 0.315, recall_hunter 0.309, PHONE 0.200, NAME 0.174",
+   "accepted": true,
+   "steering": 0.8749999999999999
+  },
+  {
+   "round": 6,
+   "node": "recall_hunter",
+   "candidates": "recall_hunter 0.784, NAME 0.351, SSN 0.090, precision_guard 0.040",
+   "accepted": true,
+   "steering": 0.9255663430420712
+  },
+  {
+   "round": 7,
+   "node": "precision_guard",
+   "candidates": "precision_guard 0.479, NAME 0.359, recall_hunter 0.241, SSN 0.085",
+   "accepted": false,
+   "steering": 0.9255663430420712
+  },
+  {
+   "round": 8,
+   "node": "precision_guard",
+   "candidates": "precision_guard 0.359, NAME 0.359, recall_hunter 0.241, SSN 0.085",
+   "accepted": true,
+   "steering": 0.9501661129568105
+  },
+  {
+   "round": 9,
+   "node": "precision_guard",
+   "candidates": "precision_guard 0.374, recall_hunter 0.323, NAME 0.311, SSN 0.113",
+   "accepted": false,
+   "steering": 0.9501661129568105
+  },
+  {
+   "round": 10,
+   "node": "recall_hunter",
+   "candidates": "recall_hunter 0.323, precision_guard 0.311, NAME 0.311, SSN 0.113",
+   "accepted": true,
+   "steering": 0.9706840390879479
+  }
+ ],
+ "curve": [
+  {
+   "round": 0,
+   "heldout": 0.27083333333333337
+  },
+  {
+   "round": 1,
+   "heldout": 0.3283582089552239
+  },
+  {
+   "round": 2,
+   "heldout": 0.3940568475452197
+  },
+  {
+   "round": 3,
+   "heldout": 0.8075909330521877
+  },
+  {
+   "round": 4,
+   "heldout": 0.8301497160557563
+  },
+  {
+   "round": 5,
+   "heldout": 0.8853984874927283
+  },
+  {
+   "round": 6,
+   "heldout": 0.8926380368098159
+  },
+  {
+   "round": 7,
+   "heldout": 0.8926380368098159
+  },
+  {
+   "round": 8,
+   "heldout": 0.917016806722689
+  },
+  {
+   "round": 9,
+   "heldout": 0.917016806722689
+  },
+  {
+   "round": 10,
+   "heldout": 0.9441884280593958
+  }
+ ],
+ "events": [
+  "round 1: insert recall_hunter (share 83%)",
+  "round 4: insert precision_guard (share 56%)"
+ ],
+ "node_stats": {
+  "recall_hunter": [
+   6,
+   6,
+   0
+  ],
+  "precision_guard": [
+   4,
+   2,
+   1
+  ]
+ },
+ "final_heldout": {
+  "f1": 0.9442,
+  "precision": 0.9211,
+  "recall": 0.9685,
+  "leak_rate": 0.0172,
+  "per_label_f1": {
+   "NAME": 0.914,
+   "EMAIL": 0.963,
+   "PHONE": 0.94,
+   "CREDIT_CARD": 0.986,
+   "SSN": 0.977,
+   "ADDRESS": 0.991
+  },
+  "tp": 922,
+  "fp": 79,
+  "fn": 30,
+  "errors": 0
+ },
+ "accepted": 8
+}

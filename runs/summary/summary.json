@@ -1,0 +1,68 @@
+{
+ "ten_attempt_methods": [
+  {
+   "method": "baseline (gen 0)",
+   "accepted": 0,
+   "heldout_f1": 0.27083333333333337,
+   "recall": null
+  },
+  {
+   "method": "fixed workflow (naive)",
+   "accepted": 4,
+   "heldout_f1": 0.7406,
+   "recall": 0.6702
+  },
+  {
+   "method": "Second-Order RSI v1",
+   "accepted": 2,
+   "heldout_f1": 0.7,
+   "recall": 0.6838
+  },
+  {
+   "method": "Second-Order RSI v2",
+   "accepted": 2,
+   "heldout_f1": 0.7,
+   "recall": 0.6838
+  },
+  {
+   "method": "Second-Order RSI v3",
+   "accepted": 2,
+   "heldout_f1": 0.7,
+   "recall": 0.6838
+  },
+  {
+   "method": "Second-Order RSI v4",
+   "accepted": 5,
+   "heldout_f1": 0.7907,
+   "recall": 0.6943
+  },
+  {
+   "method": "RSIFlow",
+   "accepted": 8,
+   "heldout_f1": 0.9442,
+   "recall": 0.9685
+  },
+  {
+   "method": "Self-HPO",
+   "accepted": 7,
+   "heldout_f1": 0.863,
+   "recall": 0.8603
+  }
+ ],
+ "budget_rsi": {
+  "heldout_f1": 0.8170398689240852,
+  "evals": 384,
+  "search_heldout_f1": 0.9124050632911392,
+  "search_evals": 2880
+ },
+ "spend_usd": {
+  "smoke": 0.00389,
+  "10.03": 0.21099199999999996,
+  "10.05": 0.128006,
+  "10.06": 0.18671500000000005,
+  "10.08": 0.010433,
+  "10.13": 0.043184,
+  "10.14": 0.047008
+ },
+ "total_usd": 0.630228
+}

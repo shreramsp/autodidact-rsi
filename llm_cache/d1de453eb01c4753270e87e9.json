@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "INTENT: {\"target\": \"ADDRESS\", \"change\": \"Add regex pattern for US postal addresses with street, city, state, and zip/postal code.\", \"expected\": \"Improve ADDRESS F1 score from 0.0 to a non-zero baseline by capturing standard multi-line or single-line address formats.\"}\n```python\n\"\"\"Generation 2: improved PII redactor adding ADDRESS detection.\n\"\"\"\nimport re\n\nPATTERNS = [\n    (\"EMAIL\", re.compile(r\"[\\w.+@[\\w]+\\.\\w+\")),\n    (\"PHONE\", re.compile(r\"(?:\\+?\\d{1,3}[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}\")),\n    (\"SSN\", re.compile(r\"\\b\\d{3}-\\d{2}-\\d{4}\\b\")),\n    (\"CREDIT_CARD\", re.compile(r\"\\b\\d{16}\\b\")),\n    (\"ADDRESS\", re.compile(\n        r\"\\d+\\s+[A-Za-z0-9\\s.,#-]+(?:Apt|Suite|Unit|Flat|Department)?\\.?\\s*\\d*,\\s*[A-Za-z\\s]+,\\s*[A-Z]{2}\\s+\\d{5}(?:-\\d{4})?\"\n    )),\n]\n\n\ndef find_pii(text):\n    \"\"\"Return a list of (start, end, label) spans that contain PII.\"\"\"\n    spans = []\n    for label, pattern in PATTERNS:\n        for m in pattern.finditer(text):\n            spans.append((m.start(), m.end(), label))\n    return spans\n```",
+ "input_tokens": 2788,
+ "output_tokens": 394,
+ "cost_usd": 0.0018214
+}

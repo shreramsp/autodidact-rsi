@@ -1,0 +1,320 @@
+{
+ "p_steps": [
+  {
+   "p": 1,
+   "focus": "NAME",
+   "accepted": true,
+   "before": 0.2694300518134715,
+   "after": 0.6867924528301886
+  },
+  {
+   "p": 2,
+   "focus": "PHONE",
+   "accepted": true,
+   "before": 0.6867924528301886,
+   "after": 0.7232472324723247
+  },
+  {
+   "p": 3,
+   "focus": "NAME",
+   "accepted": false,
+   "before": 0.7232472324723247,
+   "after": 0.7232472324723247
+  },
+  {
+   "p": 4,
+   "focus": "NAME",
+   "accepted": true,
+   "before": 0.7232472324723247,
+   "after": 0.7424242424242424
+  },
+  {
+   "p": 5,
+   "focus": "ADDRESS",
+   "accepted": false,
+   "before": 0.7424242424242424,
+   "after": 0.7396226415094339
+  },
+  {
+   "p": 6,
+   "focus": "ADDRESS",
+   "accepted": true,
+   "before": 0.7424242424242424,
+   "after": 0.7794117647058822
+  },
+  {
+   "p": 7,
+   "focus": "SSN",
+   "accepted": true,
+   "before": 0.7794117647058822,
+   "after": 0.7927272727272726
+  },
+  {
+   "p": 8,
+   "focus": "SSN",
+   "accepted": false,
+   "before": 0.7927272727272726,
+   "after": 0.7744360902255638
+  },
+  {
+   "p": 9,
+   "focus": "SSN",
+   "accepted": true,
+   "before": 0.7927272727272726,
+   "after": 0.7971014492753622
+  },
+  {
+   "p": 10,
+   "focus": "CREDIT_CARD",
+   "accepted": true,
+   "before": 0.7971014492753622,
+   "after": 0.8668941979522184
+  }
+ ],
+ "h_steps": [
+  {
+   "before_p": 1,
+   "changed": {
+    "digest_size": [
+     24,
+     28
+    ]
+   },
+   "tests_added": 4,
+   "tests_rejected": 0,
+   "rationale": "Focus on the worst labels (NAME and ADDRESS) while introducing diverse test formats including order and part number traps.",
+   "examples": [
+    {
+     "id": "h1-0",
+     "text": "Hello, my name is John Doe and my order is #482910 for the Widget X priced at $49.99.",
+     "spans": [
+      {
+       "start": 18,
+       "end": 26,
+       "label": "NAME",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    },
+    {
+     "id": "h1-1",
+     "text": "Please ship the replacement to 123 Main St, Springfield, IL 62701. Order reference is P-99482.",
+     "spans": [
+      {
+       "start": 31,
+       "end": 65,
+       "label": "ADDRESS",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    },
+    {
+     "id": "h1-2",
+     "text": "My email is test.user+filter@domain.co.uk and my phone is (555) 123-4567. Part #8847-B.",
+     "spans": [
+      {
+       "start": 12,
+       "end": 41,
+       "label": "EMAIL",
+       "fmt": "self_written"
+      },
+      {
+       "start": 58,
+       "end": 72,
+       "label": "PHONE",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    }
+   ]
+  },
+  {
+   "before_p": 4,
+   "changed": {
+    "digest_size": [
+     28,
+     32
+    ],
+    "group_by": [
+     "none",
+     "label"
+    ]
+   },
+   "tests_added": 2,
+   "tests_rejected": 0,
+   "rationale": "Focus on ADDRESS and CREDIT_CARD as they currently have zero or very low F1, grouping by label to help the agent target specific failures.",
+   "examples": [
+    {
+     "id": "h4-0",
+     "text": "Hello support, my tracking number is 9823-4412-9918 and my shipping address is 1049 Washington Blvd Apt 3B, Chicago, IL 60607.",
+     "spans": [
+      {
+       "start": 79,
+       "end": 125,
+       "label": "ADDRESS",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    },
+    {
+     "id": "h4-1",
+     "text": "Please charge my credit card 4111222233334444 for order #54920. My email is user.name+tag@sub.domain.co.uk.",
+     "spans": [
+      {
+       "start": 29,
+       "end": 45,
+       "label": "CREDIT_CARD",
+       "fmt": "self_written"
+      },
+      {
+       "start": 76,
+       "end": 106,
+       "label": "EMAIL",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    }
+   ]
+  },
+  {
+   "before_p": 7,
+   "changed": {},
+   "tests_added": 2,
+   "tests_rejected": 0,
+   "rationale": "Focus on worst label (CREDIT_CARD) while adding realistic support test messages containing traps like order numbers and part numbers.",
+   "examples": [
+    {
+     "id": "h7-0",
+     "text": "Hello, I placed an order for the NeoVibe Headphones (Order # 9832-41-0943). My credit card 4839-2049-5839-2043 was charged twice. Please contact me at 555-019-2834 or support@neovibe.org. \n- Marcus Vance",
+     "spans": [
+      {
+       "start": 91,
+       "end": 110,
+       "label": "CREDIT_CARD",
+       "fmt": "self_written"
+      },
+      {
+       "start": 151,
+       "end": 163,
+       "label": "PHONE",
+       "fmt": "self_written"
+      },
+      {
+       "start": 167,
+       "end": 186,
+       "label": "EMAIL",
+       "fmt": "self_written"
+      },
+      {
+       "start": 191,
+       "end": 203,
+       "label": "NAME",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    },
+    {
+     "id": "h7-1",
+     "text": "My social security number is 492-01-9482. Please update my address on file to 492 Red Oak Lane Apt 4B, Austin, TX 78701.\n- Sarah",
+     "spans": [
+      {
+       "start": 29,
+       "end": 40,
+       "label": "SSN",
+       "fmt": "self_written"
+      },
+      {
+       "start": 78,
+       "end": 119,
+       "label": "ADDRESS",
+       "fmt": "self_written"
+      },
+      {
+       "start": 123,
+       "end": 128,
+       "label": "NAME",
+       "fmt": "self_written"
+      }
+     ],
+     "decoys": []
+    }
+   ]
+  }
+ ],
+ "curve": [
+  {
+   "p": 0,
+   "heldout": 0.27083333333333337
+  },
+  {
+   "p": 1,
+   "heldout": 0.654524089306698
+  },
+  {
+   "p": 2,
+   "heldout": 0.6997150997150997
+  },
+  {
+   "p": 3,
+   "heldout": 0.6997150997150997
+  },
+  {
+   "p": 4,
+   "heldout": 0.7253396337861785
+  },
+  {
+   "p": 5,
+   "heldout": 0.7253396337861785
+  },
+  {
+   "p": 6,
+   "heldout": 0.7869589657110737
+  },
+  {
+   "p": 7,
+   "heldout": 0.794413407821229
+  },
+  {
+   "p": 8,
+   "heldout": 0.794413407821229
+  },
+  {
+   "p": 9,
+   "heldout": 0.8064159292035399
+  },
+  {
+   "p": 10,
+   "heldout": 0.8630136986301371
+  }
+ ],
+ "final_harness": {
+  "digest_size": 32,
+  "group_by": "label",
+  "focus_mode": "worst_label"
+ },
+ "final_heldout": {
+  "f1": 0.863,
+  "precision": 0.8658,
+  "recall": 0.8603,
+  "leak_rate": 0.1464,
+  "per_label_f1": {
+   "NAME": 0.944,
+   "EMAIL": 0.837,
+   "PHONE": 0.629,
+   "CREDIT_CARD": 1.0,
+   "SSN": 0.706,
+   "ADDRESS": 0.869
+  },
+  "tp": 819,
+  "fp": 127,
+  "fn": 133,
+  "errors": 0
+ },
+ "accepted": 7
+}

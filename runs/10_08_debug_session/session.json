@@ -1,0 +1,218 @@
+{
+ "attempts": [
+  {
+   "round": 1,
+   "target": "PHONE",
+   "change": "Improve PHONE regex pattern to support international country codes, extensions, and add context filtering to avoid false positives on order and tracking numbers.",
+   "expected": "Increase PHONE F1 by correctly matching international numbers and extensions while filtering out order numbers.",
+   "accepted": false,
+   "steering_before": 0.625,
+   "steering_after": 0.0,
+   "label_deltas": {
+    "NAME": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "EMAIL": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "PHONE": {
+     "dp": -0.625,
+     "dr": -0.625,
+     "df1": -0.625
+    },
+    "CREDIT_CARD": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "SSN": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "ADDRESS": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    }
+   },
+   "regex_added": [],
+   "regex_removed": [
+    "\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}"
+   ],
+   "anomalies": [
+    "mismatch"
+   ]
+  },
+  {
+   "round": 2,
+   "target": "PHONE",
+   "change": "Improve PHONE regex to support international numbers with country codes and extensions, while rejecting order numbers like 467-683-9760.",
+   "expected": "PHONE precision and recall should increase by correctly matching international and extended phone numbers while avoiding order numbers.",
+   "accepted": true,
+   "steering_before": 0.625,
+   "steering_after": 0.9411764705882353,
+   "label_deltas": {
+    "NAME": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "EMAIL": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "PHONE": {
+     "dp": 0.26388888888888884,
+     "dr": 0.375,
+     "df1": 0.3161764705882353
+    },
+    "CREDIT_CARD": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "SSN": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "ADDRESS": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    }
+   },
+   "regex_added": [
+    "(?:order|#)\\s*(?:number)?[:#]?\\s*(\\d{3}-\\d{3}-\\d{4})",
+    "(?<!\\d)(?:\\+\\d{1,3}[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}|\\b\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\\b)(?:(?:\\s*(?:ext\\.?|x)\\s*\\d+)?)\\b(?!-)"
+   ],
+   "regex_removed": [
+    "\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}"
+   ],
+   "anomalies": []
+  },
+  {
+   "round": 3,
+   "target": "PHONE",
+   "change": "Exclude dashed 3-3-4 digit patterns preceded by order-related keywords or appearing in order contexts.",
+   "expected": "Precision on PHONE should increase by eliminating false positives on order numbers.",
+   "accepted": false,
+   "steering_before": 0.9411764705882353,
+   "steering_after": 0.9333333333333333,
+   "label_deltas": {
+    "NAME": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "EMAIL": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "PHONE": {
+     "dp": 0.11111111111111116,
+     "dr": -0.125,
+     "df1": -0.007843137254901933
+    },
+    "CREDIT_CARD": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "SSN": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "ADDRESS": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    }
+   },
+   "regex_added": [
+    "(?:order|#|no\\.?)\\s*(?:number)?[:#]?\\s*(\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4})",
+    "(?<!\\d)(?:\\+\\d{1,3}[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}|\\b\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\\b)(?:(?:\\s*(?:ext\\.?|x)\\s*\\d+)?)\\b(postId|(?!\\-))"
+   ],
+   "regex_removed": [
+    "(?:order|#)\\s*(?:number)?[:#]?\\s*(\\d{3}-\\d{3}-\\d{4})",
+    "(?<!\\d)(?:\\+\\d{1,3}[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}|\\b\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\\b)(?:(?:\\s*(?:ext\\.?|x)\\s*\\d+)?)\\b(?!-)"
+   ],
+   "anomalies": [
+    "recurrence",
+    "mismatch"
+   ]
+  },
+  {
+   "round": 4,
+   "target": "PHONE",
+   "change": "Exclude dashed 3-3-4 digit numbers immediately following order-related terms from being classified as PHONE numbers.",
+   "expected": "PHONE precision will increase by eliminating false positives on order numbers formatted as XXX-XXX-XXXX.",
+   "accepted": false,
+   "steering_before": 0.9411764705882353,
+   "steering_after": 0.875,
+   "label_deltas": {
+    "NAME": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "EMAIL": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "PHONE": {
+     "dp": -0.01388888888888884,
+     "dr": -0.125,
+     "df1": -0.06617647058823528
+    },
+    "CREDIT_CARD": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "SSN": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    },
+    "ADDRESS": {
+     "dp": 0.0,
+     "dr": 0.0,
+     "df1": 0.0
+    }
+   },
+   "regex_added": [
+    "(?<!\\d)(?:\\+\\d{1,3}[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}|\\b\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\\b)(?:(?:\\s*(?:ext\\.?|x)\\s*\\d+)?)\\b(job|@|#|-)?(?!-)",
+    "^\\d{3}-\\d{3}-\\d{4}$"
+   ],
+   "regex_removed": [
+    "(?<!\\d)(?:\\+\\d{1,3}[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}|\\b\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\\b)(?:(?:\\s*(?:ext\\.?|x)\\s*\\d+)?)\\b(?!-)"
+   ],
+   "anomalies": [
+    "recurrence",
+    "mismatch"
+   ]
+  }
+ ],
+ "after_attempts": "caught 8/8 phones, 1 false alarms on look-alikes (F1 0.941)",
+ "probe": {
+  "anomaly": "recurrence",
+  "target": "PHONE",
+  "raw": "ROOT_CAUSE: The redactor is incorrectly catching dashed 3-3-4 digit numbers like '467-683-9760' when preceded by \"order number is\", because the negative lookbehind context window checks for \"order\" or \"#\" but fails to cover the exact phrasal distance.\nRULE: Never classify a dashed 3-3-4 digit number as a PHONE if the preceding 25 characters contain order-related keywords unless an explicit phone prefix (e.g., 'call', 'cell') is present immediately before the number.\nNEXT_EDIT: Update the prefix check in the iteration loop to scan up to 25 characters backwards for 'order' and ensure robust context exclusion for dashed numeric formats.\nACTION: KEEP_GOING",
+  "root_cause": "The redactor is incorrectly catching dashed 3-3-4 digit numbers like '467-683-9760' when preceded by \"order number is\", because the negative lookbehind context window checks for \"order\" or \"#\" but fails to cover the exact phrasal distance.",
+  "rule": "Never classify a dashed 3-3-4 digit number as a PHONE if the preceding 25 characters contain order-related keywords unless an explicit phone prefix (e.g., 'call', 'cell') is present immediately before the number.",
+  "next_edit": "Update the prefix check in the iteration loop to scan up to 25 characters backwards for 'order' and ensure robust context exclusion for dashed numeric formats.",
+  "action": "KEEP_GOING",
+  "round": 0
+ },
+ "after_diagnosis": "caught 7/8 phones, 0 false alarms on look-alikes (F1 0.933)"
+}

@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "{\"digest_size\": 32, \"group_by\": \"label\", \"focus_mode\": \"worst_label\", \"new_tests\": [{\"text\": \"Hello, I placed an order for the NeoVibe Headphones (Order # 9832-41-0943). My credit card 4839-2049-5839-2043 was charged twice. Please contact me at 555-019-2834 or support@neovibe.org. \\n- Marcus Vance\", \"pii\": [[\"4839-2049-5839-2043\", \"CREDIT_CARD\"], [\"555-019-2834\", \"PHONE\"], [\"support@neovibe.org\", \"EMAIL\"], [\"Marcus Vance\", \"NAME\"]]}, {\"text\": \"My social security number is 492-01-9482. Please update my address on file to 492 Red Oak Lane Apt 4B, Austin, TX 78701.\\n- Sarah\", \"pii\": [[\"492-01-9482\", \"SSN\"], [\"492 Red Oak Lane Apt 4B, Austin, TX 78701\", \"ADDRESS\"], [\"Sarah\", \"NAME\"]]}], \"rationale\": \"Focus on worst label (CREDIT_CARD) while adding realistic support test messages containing traps like order numbers and part numbers.\"}",
+ "input_tokens": 3361,
+ "output_tokens": 334,
+ "cost_usd": 0.0018433
+}

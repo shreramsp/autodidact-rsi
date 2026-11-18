@@ -1,0 +1,233 @@
+{
+ "part_a": [
+  {
+   "readout": "paper: 8 diff features, absolute score",
+   "mean_heldout_f1_of_pick": 0.7056881383994112,
+   "spearman": -0.31349206349206354
+  },
+  {
+   "readout": "paper: 8 diff features, predict gain",
+   "mean_heldout_f1_of_pick": 0.7175825440602805,
+   "spearman": -0.261904761904762
+  },
+  {
+   "readout": "paper + task features, predict gain",
+   "mean_heldout_f1_of_pick": 0.7131248369183196,
+   "spearman": 0.035714285714285726
+  },
+  {
+   "readout": "task features only, predict gain",
+   "mean_heldout_f1_of_pick": 0.7825461188313003,
+   "spearman": 0.2817460317460318
+  }
+ ],
+ "history": [
+  {
+   "generation": 0,
+   "program": "g0",
+   "steering_f1": 0.2694300518134715,
+   "heldout_f1": 0.27083333333333337,
+   "evals_used": 0
+  },
+  {
+   "generation": 1,
+   "program": "b1c0",
+   "steering_f1": 0.8039867109634552,
+   "heldout_f1": 0.7537740760020823,
+   "evals_used": 64
+  },
+  {
+   "generation": 2,
+   "program": "b2c2",
+   "steering_f1": 0.8424437299035369,
+   "heldout_f1": 0.7884615384615384,
+   "evals_used": 128
+  },
+  {
+   "generation": 3,
+   "program": "b2c2",
+   "steering_f1": 0.8424437299035369,
+   "heldout_f1": 0.7884615384615384,
+   "evals_used": 192
+  },
+  {
+   "generation": 4,
+   "program": "b4c1",
+   "steering_f1": 0.8438538205980066,
+   "heldout_f1": 0.791754756871036,
+   "evals_used": 256
+  },
+  {
+   "generation": 5,
+   "program": "b4c1",
+   "steering_f1": 0.8438538205980066,
+   "heldout_f1": 0.791754756871036,
+   "evals_used": 320
+  },
+  {
+   "generation": 6,
+   "program": "b6c1",
+   "steering_f1": 0.8698630136986302,
+   "heldout_f1": 0.8170398689240852,
+   "evals_used": 384
+  }
+ ],
+ "decisions": [
+  {
+   "generation": 1,
+   "foci": [
+    "NAME",
+    "PHONE",
+    "SSN",
+    "ADDRESS"
+   ],
+   "predicted": [
+    0.1728,
+    0.093,
+    0.1233,
+    0.1363
+   ],
+   "shadow_steering": [
+    0.8039867109634552,
+    0.28099173553719003,
+    0.46153846153846156,
+    0.5188284518828451
+   ],
+   "chosen": "b1c0",
+   "chosen_focus": "NAME",
+   "best_by_shadow": "b1c0",
+   "regret": 0.0,
+   "accepted": true
+  },
+  {
+   "generation": 2,
+   "foci": [
+    "NAME",
+    "PHONE",
+    "ADDRESS",
+    "SSN"
+   ],
+   "predicted": [
+    -0.0419,
+    0.0074,
+    0.0334,
+    -0.0056
+   ],
+   "shadow_steering": [
+    0.8389261744966443,
+    0.8231292517006803,
+    0.8424437299035369,
+    0.8120805369127517
+   ],
+   "chosen": "b2c2",
+   "chosen_focus": "ADDRESS",
+   "best_by_shadow": "b2c2",
+   "regret": 0.0,
+   "accepted": true
+  },
+  {
+   "generation": 3,
+   "foci": [
+    "NAME",
+    "PHONE",
+    "SSN",
+    "ADDRESS"
+   ],
+   "predicted": [
+    -0.0512,
+    0.0024,
+    -0.0117,
+    -0.0512
+   ],
+   "shadow_steering": [
+    0.8766233766233766,
+    0.8424437299035369,
+    0.8273615635179153,
+    0.8424437299035369
+   ],
+   "chosen": "b3c1",
+   "chosen_focus": "PHONE",
+   "best_by_shadow": "b3c0",
+   "regret": 0.03417964671983975,
+   "accepted": false
+  },
+  {
+   "generation": 4,
+   "foci": [
+    "NAME",
+    "PHONE",
+    "SSN",
+    "ADDRESS"
+   ],
+   "predicted": [
+    -0.0513,
+    0.0024,
+    -0.0118,
+    -0.0513
+   ],
+   "shadow_steering": [
+    0.8766233766233766,
+    0.8438538205980066,
+    0.8349514563106797,
+    0.8424437299035369
+   ],
+   "chosen": "b4c1",
+   "chosen_focus": "PHONE",
+   "best_by_shadow": "b4c0",
+   "regret": 0.03276955602537002,
+   "accepted": true
+  },
+  {
+   "generation": 5,
+   "foci": [
+    "NAME",
+    "PHONE",
+    "SSN",
+    "ADDRESS"
+   ],
+   "predicted": [
+    -0.0517,
+    -0.0517,
+    -0.0099,
+    -0.0517
+   ],
+   "shadow_steering": [
+    0.8791946308724832,
+    0.8514851485148515,
+    0.8399999999999999,
+    0.8514851485148515
+   ],
+   "chosen": "b5c2",
+   "chosen_focus": "SSN",
+   "best_by_shadow": "b5c0",
+   "regret": 0.039194630872483316,
+   "accepted": false
+  },
+  {
+   "generation": 6,
+   "foci": [
+    "NAME",
+    "PHONE",
+    "SSN",
+    "ADDRESS"
+   ],
+   "predicted": [
+    -0.0515,
+    -0.0055,
+    -0.0097,
+    -0.0515
+   ],
+   "shadow_steering": [
+    0.8791946308724832,
+    0.8698630136986302,
+    0.8399999999999999,
+    0.8514851485148515
+   ],
+   "chosen": "b6c1",
+   "chosen_focus": "PHONE",
+   "best_by_shadow": "b6c0",
+   "regret": 0.009331617173853002,
+   "accepted": true
+  }
+ ]
+}

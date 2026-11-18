@@ -1,0 +1,1370 @@
+{
+ "naive": {
+  "summary": {
+   "mode": "naive",
+   "attempts": 10,
+   "accepted": 4,
+   "success_rate": 0.4,
+   "final_steering": 0.7313432835820896,
+   "final_heldout": {
+    "f1": 0.7406,
+    "precision": 0.8275,
+    "recall": 0.6702,
+    "leak_rate": 0.4436,
+    "per_label_f1": {
+     "NAME": 0.792,
+     "EMAIL": 0.914,
+     "PHONE": 0.557,
+     "CREDIT_CARD": 1.0,
+     "SSN": 0.724,
+     "ADDRESS": 0.0
+    },
+    "tp": 638,
+    "fp": 133,
+    "fn": 314,
+    "errors": 0
+   },
+   "anomalies": {
+    "mismatch": 7,
+    "recurrence": 5,
+    "opposing": 1
+   },
+   "probes": 0
+  },
+  "trace": [
+   {
+    "round": 1,
+    "target": "NAME",
+    "change": "Add regex patterns and heuristic context extraction for person names including introductions, sign-offs, and third-party references.",
+    "expected": "NAME F1 score should improve significantly from 0.0.",
+    "accepted": true,
+    "steering_before": 0.2694300518134715,
+    "steering_after": 0.6937269372693728,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.9897959183673469,
+      "dr": 0.60625,
+      "df1": 0.7519379844961241
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.2619047619047619,
+      "dr": 0.8108108108108109,
+      "df1": 0.4389065479974571
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.8222222222222222,
+      "df1": 0.6981132075471699
+     },
+     "SSN": {
+      "dp": 0.08869115958668194,
+      "dr": 0.36363636363636365,
+      "df1": 0.16588235294117654
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b",
+     "\\b(?:\\d[ -]*){13,19}\\b",
+     "\\b(?:my name is|I am|I'm|This is)\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b\\d{3}[-\\s]?\\d{2}[-\\s]?\\d{4}\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "regex_removed": [
+     "\\b\\d{16}\\b",
+     "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+     "\\d{3}-\\d{3}-\\d{4}"
+    ],
+    "anomalies": []
+   },
+   {
+    "round": 2,
+    "target": "NAME",
+    "change": "Add broader NAME patterns for uncapitalized names, Dutch surname prefixes (van), and family member/colleague references without strict capitalization constraints.",
+    "expected": "F1 score for NAME should increase by capturing missed lowercase names and diverse third-party references.",
+    "accepted": true,
+    "steering_before": 0.6937269372693728,
+    "steering_after": 0.6950354609929078,
+    "label_deltas": {
+     "NAME": {
+      "dp": -0.18832533013205277,
+      "dr": 0.07500000000000007,
+      "df1": -0.015451498009637743
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is)\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b"
+    ],
+    "anomalies": [
+     "mismatch"
+    ]
+   },
+   {
+    "round": 3,
+    "target": "NAME",
+    "change": "Fix false positive 'talking about' by excluding it in name patterns, and add address regex and address/email/phone improvements to boost overall F1.",
+    "expected": "NAME precision and overall F1 should increase.",
+    "accepted": true,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.7220216606498194,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.1894385026737968,
+      "dr": 0.0,
+      "df1": 0.07092092092092106
+     },
+     "EMAIL": {
+      "dp": 0.043749999999999956,
+      "dr": 0.21212121212121215,
+      "df1": 0.14111405835543778
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 1.0,
+      "dr": 0.07142857142857142,
+      "df1": 0.13333333333333333
+     }
+    },
+    "regex_added": [
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b[\\w.-]+@[\\w.-]+\\.\\w+\\b|\\b[\\w.-]+\\s*\\[\\s*at\\s*\\]\\s*[\\w.-]+\\s*\\[\\s*dot\\s*\\]\\s*\\w+\\b",
+     "\\d{1,5}\\s+[A-Z0-9a-z\u00e0-\u00f6\u00f8-\u00ff\\.\\,\\#\\-\\s]+(?:Avenue|Ave|Street|St|Road|Rd|Boulevard|Blvd|Lane|Ln|Drive|Dr|Court|Ct|Circle|Cir|Way|Place|Pl)\\b\\.?(?:,\\s*(?:Apt|Suite|Unit|Building|Ste)\\s*\\d+[A-Z]?)?(?:,\\s*[A-Za-z\\s]+),\\s*(?:A[KLRZ]|C[AOT]|D[CE]|FL|GA|H[IJK]|I[ADLN|L]|K[SY]|LA|M[ADEINOST|D]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])\\s+\\d{5}(?:-\\d{4})?\\b"
+    ],
+    "regex_removed": [
+     "[\\w.]+@[\\w]+\\.\\w+",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b"
+    ],
+    "anomalies": []
+   },
+   {
+    "round": 4,
+    "target": "PHONE",
+    "change": "Refine the PHONE pattern to require standard phone formatting or explicit prefixes/contexts like 'phone:', 'call:', or international country codes to prevent matching 10-digit order numbers.",
+    "expected": "PHONE precision will increase significantly by eliminating false positives on order numbers.",
+    "accepted": false,
+    "steering_before": 0.7220216606498194,
+    "steering_after": 0.6923076923076923,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": -0.0806878306878307,
+      "dr": 0.027027027027026973,
+      "df1": -0.07922485038472499
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": -0.06666666666666665,
+      "df1": -0.03448275862068961
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:(?:\\b(?:phone|call|text|cell|mobile)(?:[:\\s]|s*at\\s*[:\\s]*)?)|\\+)\\+?(?:1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b|\\b\\+?\\d{1,3}[-.\\s]?\\(?\\d{2,4}\\)?[-.\\s]?\\d{3,4}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b",
+     "+",
+     "^(?:phone|call|text|cell|mobile)(?:[:\\s]|s*at\\s*[:\\s]*)?"
+    ],
+    "regex_removed": [
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "anomalies": [
+     "mismatch"
+    ]
+   },
+   {
+    "round": 5,
+    "target": "PHONE",
+    "change": "Refine the PHONE pattern to require standard phone formatting or explicit phone context keywords while avoiding standalone 10-digit numbers inside order numbers.",
+    "expected": "Phone precision should increase significantly by eliminating false positives on 10-digit order numbers while maintaining high recall for international and formatted phone numbers.",
+    "accepted": false,
+    "steering_before": 0.7220216606498194,
+    "steering_after": 0.7220216606498194,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?x)\n        \\b(?:\n            # International or explicitly formatted numbers\n            (?:\\+?\\d{1,3}[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\n            |\n            # Phone numbers following explicit indicators like 'phone:', 'call:', 'at'\n            (?:phone|cell|mobile|call|text|number)[:\\s]+\\+?\\d{1,4}[-.\\s]?\\(?\\d{1,3}\\)?[-.\\s]?\\d{3,4}[-.\\s]?\\d{4}\n        )\n        (?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b\n    "
+    ],
+    "regex_removed": [
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 6,
+    "target": "PHONE",
+    "change": "Refine the PHONE pattern to require standard phone formatting or explicit phone context (like international + prefixes or area codes with formatting) to avoid false positives on 10-digit order numbers.",
+    "expected": "PHONE precision will increase significantly by eliminating false positives on order numbers.",
+    "accepted": true,
+    "steering_before": 0.7220216606498194,
+    "steering_after": 0.7313432835820896,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.02380952380952378,
+      "dr": -0.43243243243243246,
+      "df1": -0.10628726854273457
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "\\b(?:\\+?\\d{1,3}[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]\\d{3}[-.\\s]\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b|\\b\\+?\\d{1,3}\\s+\\d{2,4}\\s+\\d{3,4}\\s+\\d{4}\\b"
+    ],
+    "regex_removed": [
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "opposing",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 7,
+    "target": "NAME",
+    "change": "Improve NAME regex patterns to capture accented characters, hyphens in names like Rosa-Maria, particles like 'van', and expand relation phrases.",
+    "expected": "NAME recall and overall F1 should increase.",
+    "accepted": false,
+    "steering_before": 0.7313432835820896,
+    "steering_after": 0.5022026431718062,
+    "label_deltas": {
+     "NAME": {
+      "dp": -0.990909090909091,
+      "dr": -0.68125,
+      "df1": -0.8074074074074075
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+[A-Z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00e0-\u00f6\u00f8-\u00ff]+)?)?)\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "mismatch"
+    ]
+   },
+   {
+    "round": 8,
+    "target": "NAME",
+    "change": "Improve NAME regex patterns to support hyphenated names like Rosa-Maria, names with particles like van, and expand third-party relationship and sign-off contexts.",
+    "expected": "NAME recall and F1 score should increase significantly by capturing missed names and hyphenated names correctly.",
+    "accepted": false,
+    "steering_before": 0.7313432835820896,
+    "steering_after": 0.7313432835820896,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.009090909090909038,
+      "dr": 0.006249999999999978,
+      "df1": 0.007407407407407307
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)?)\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "recurrence"
+    ]
+   },
+   {
+    "round": 9,
+    "target": "NAME",
+    "change": "Improve NAME regex patterns to capture accented characters, hyphenated names like Rosa-Maria, and particles like van, while boosting recall.",
+    "expected": "NAME recall and F1 should increase significantly.",
+    "accepted": false,
+    "steering_before": 0.7313432835820896,
+    "steering_after": 0.7121212121212122,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.009090909090909038,
+      "dr": -0.05625000000000002,
+      "df1": -0.03817663817663819
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+[A-Z\u00c0-\u00d6\u00d8-\u00df][A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 10,
+    "target": "NAME",
+    "change": "Improve NAME regex patterns to capture accented characters, hyphenated/compound names like Rosa-Maria and van suffixes, and third-party relationship references with various titles.",
+    "expected": "NAME recall and F1 score will increase by correctly capturing missed names in sign-offs and third-party contexts.",
+    "accepted": false,
+    "steering_before": 0.7313432835820896,
+    "steering_after": 0.6923076923076923,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.009090909090909038,
+      "dr": -0.09999999999999998,
+      "df1": -0.07222954179475916
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?(?:\\s+[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?){1,2})\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "mismatch"
+    ]
+   }
+  ],
+  "probes": [],
+  "memory": [],
+  "curve": [
+   {
+    "round": 0,
+    "steering": 0.2694300518134715,
+    "heldout": 0.27083333333333337
+   },
+   {
+    "round": 1,
+    "steering": 0.6937269372693728,
+    "heldout": 0.7061477721376198
+   },
+   {
+    "round": 2,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 3,
+    "steering": 0.7220216606498194,
+    "heldout": 0.7339955849889626
+   },
+   {
+    "round": 4,
+    "steering": 0.7220216606498194,
+    "heldout": 0.7339955849889626
+   },
+   {
+    "round": 5,
+    "steering": 0.7220216606498194,
+    "heldout": 0.7339955849889626
+   },
+   {
+    "round": 6,
+    "steering": 0.7313432835820896,
+    "heldout": 0.7405687753917585
+   },
+   {
+    "round": 7,
+    "steering": 0.7313432835820896,
+    "heldout": 0.7405687753917585
+   },
+   {
+    "round": 8,
+    "steering": 0.7313432835820896,
+    "heldout": 0.7405687753917585
+   },
+   {
+    "round": 9,
+    "steering": 0.7313432835820896,
+    "heldout": 0.7405687753917585
+   },
+   {
+    "round": 10,
+    "steering": 0.7313432835820896,
+    "heldout": 0.7405687753917585
+   }
+  ]
+ },
+ "SO-RSI": {
+  "summary": {
+   "mode": "sorsi",
+   "attempts": 10,
+   "accepted": 5,
+   "success_rate": 0.5,
+   "final_steering": 0.7782101167315175,
+   "final_heldout": {
+    "f1": 0.7907,
+    "precision": 0.9181,
+    "recall": 0.6943,
+    "leak_rate": 0.2437,
+    "per_label_f1": {
+     "NAME": 0.754,
+     "EMAIL": 0.837,
+     "PHONE": 0.203,
+     "CREDIT_CARD": 0.995,
+     "SSN": 0.769,
+     "ADDRESS": 1.0
+    },
+    "tp": 661,
+    "fp": 59,
+    "fn": 291,
+    "errors": 0
+   },
+   "anomalies": {
+    "mismatch": 6,
+    "recurrence": 5,
+    "opposing": 4
+   },
+   "probes": 4
+  },
+  "trace": [
+   {
+    "round": 1,
+    "target": "NAME",
+    "change": "Add regex patterns and heuristic context extraction for person names including introductions, sign-offs, and third-party references.",
+    "expected": "NAME F1 score should improve significantly from 0.0.",
+    "accepted": true,
+    "steering_before": 0.2694300518134715,
+    "steering_after": 0.6937269372693728,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.9897959183673469,
+      "dr": 0.60625,
+      "df1": 0.7519379844961241
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.2619047619047619,
+      "dr": 0.8108108108108109,
+      "df1": 0.4389065479974571
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.8222222222222222,
+      "df1": 0.6981132075471699
+     },
+     "SSN": {
+      "dp": 0.08869115958668194,
+      "dr": 0.36363636363636365,
+      "df1": 0.16588235294117654
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b",
+     "\\b(?:\\d[ -]*){13,19}\\b",
+     "\\b(?:my name is|I am|I'm|This is)\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b\\d{3}[-\\s]?\\d{2}[-\\s]?\\d{4}\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "regex_removed": [
+     "\\b\\d{16}\\b",
+     "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+     "\\d{3}-\\d{3}-\\d{4}"
+    ],
+    "anomalies": []
+   },
+   {
+    "round": 2,
+    "target": "NAME",
+    "change": "Add broader NAME patterns for uncapitalized names, Dutch surname prefixes (van), and family member/colleague references without strict capitalization constraints.",
+    "expected": "F1 score for NAME should increase by capturing missed lowercase names and diverse third-party references.",
+    "accepted": true,
+    "steering_before": 0.6937269372693728,
+    "steering_after": 0.6950354609929078,
+    "label_deltas": {
+     "NAME": {
+      "dp": -0.18832533013205277,
+      "dr": 0.07500000000000007,
+      "df1": -0.015451498009637743
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is)\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b"
+    ],
+    "anomalies": [
+     "mismatch"
+    ]
+   },
+   {
+    "round": 3,
+    "target": "NAME",
+    "change": "Refine NAME_PATTERNS to exclude non-name phrases like 'talking about' after 'I'm' and properly support hyphenated and accented names.",
+    "expected": "NAME F1 score should increase due to elimination of false positives on 'talking about' and better capture of hyphenated names like Rosa-Maria.",
+    "accepted": false,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.6937269372693728,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.19852941176470584,
+      "dr": -0.06874999999999998,
+      "df1": 0.02320343599413377
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?)?)\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "opposing"
+    ]
+   },
+   {
+    "round": 4,
+    "target": "NAME",
+    "change": "Refine NAME regex patterns to require capitalization on captured names, support hyphenated names and accented characters, and exclude phrases like 'talking about'.",
+    "expected": "F1 for NAME increases by eliminating false positives like 'talking about' and capturing missed names like 'Rosa-Maria' and 'Michelle Freeman'.",
+    "accepted": false,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.6539923954372624,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.19852941176470584,
+      "dr": -0.17500000000000004,
+      "df1": -0.06428731636200513
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+|de\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,2})\\b",
+     "\\b(?:my name is|I am|This is|hey its)\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+|de\\s+)?(?:[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?)){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+|de\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,3})\\b",
+     "\\bI'm\\s+(?!talking about\\b)([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:van\\s+|de\\s+)?(?:[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?)){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,2})\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "opposing",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 5,
+    "target": "NAME",
+    "change": "Refine introduction and third-party NAME patterns to require proper capitalization and exclude verb phrases like 'talking about', while fully supporting hyphens and accented characters.",
+    "expected": "NAME F1 score will increase due to eliminating false positives on 'talking about' and capturing missed names like 'Rosa-Maria' and hyphenated/accented names.",
+    "accepted": false,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.6539923954372624,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.19852941176470584,
+      "dr": -0.17500000000000004,
+      "df1": -0.06428731636200513
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:[dD](?:e|el|la)\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about\\b)([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:[dD](?:e|el|la)\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+(?:[dD](?:e|el|la)\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,3})\\b",
+     "\\b\\d{3}[-\\s]?\\d{2}[-.\\s]?\\d{4}\\b",
+     "\\n\\s*-\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?(?:\\s+[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*(?:-[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*)?){1,2})\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b\\d{3}[-\\s]?\\d{2}[-\\s]?\\d{4}\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "opposing",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 6,
+    "target": "PHONE",
+    "change": "Refine the PHONE pattern to require standard phone formatting or explicit word context (like 'phone' or 'call') to avoid false positives on 10-digit order numbers and IDs.",
+    "expected": "PHONE precision will increase significantly, reducing false positives on order numbers.",
+    "accepted": false,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.6830985915492959,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.02206736353077815,
+      "dr": 0.027027027027026973,
+      "df1": 0.026251823043266787
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": -0.06666666666666665,
+      "df1": -0.03448275862068961
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "\\b(?:(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}|\\+?\\d{1,3}[-.\\s]?\\d{2,4}[-.\\s]?\\d{3,4}[-.\\s]?\\d{4})(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "regex_removed": [
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "anomalies": [
+     "mismatch"
+    ]
+   },
+   {
+    "round": 7,
+    "target": "PHONE",
+    "change": "Refine the PHONE pattern to mandate either an international prefix or standard punctuation/separators between digit groups, preventing bare 10-digit order numbers from matching.",
+    "expected": "PHONE precision will increase significantly by eliminating false positives on order numbers.",
+    "accepted": false,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.6857142857142857,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": -0.12939958592132506,
+      "dr": -0.4054054054054055,
+      "df1": -0.2034929050366443
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "\\b(?:\\+?\\d{1,3}[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "regex_removed": [
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 8,
+    "target": "PHONE",
+    "change": "Refine the PHONE pattern to require explicit international prefixes, phone punctuation, or explicit context keywords so that plain 10-digit order numbers are not misidentified as phone numbers.",
+    "expected": "Phone precision will increase significantly by eliminating false positives on order numbers.",
+    "accepted": true,
+    "steering_before": 0.6950354609929078,
+    "steering_after": 0.7027027027027027,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.5952380952380952,
+      "dr": -0.8108108108108109,
+      "df1": -0.366861519854868
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "\\b(?:(?:\\+?\\d{1,3}[-.\\s]?)?(?:\\(\\d{3}\\)|\\d{3})[-.\\s]\\d{3}[-.\\s]\\d{4}|\\+?\\d{1,3}[-.\\s]\\d{3,4}[-.\\s]\\d{3,4}[-.\\s]\\d{3,4}|(?:phone|call|text|cell|mobile)(?:\\s+(?:me\\s+at|number|is)?)?\\s*:?\\s*)?\\+?\\d{1,3}[-.\\s]?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "regex_removed": [
+     "\\b(?:\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}(?:\\s*(?:ext|x)\\.?\\s*\\d+)?\\b"
+    ],
+    "anomalies": [
+     "recurrence",
+     "mismatch"
+    ]
+   },
+   {
+    "round": 9,
+    "target": "ADDRESS",
+    "change": "Add a robust multi-line postal address regex pattern to identify full US-style street addresses including street number, street name, optional unit/apt, city, state abbreviation, and ZIP code.",
+    "expected": "The ADDRESS metric should move from F1 0.000 to a high F1 score as addresses are successfully detected.",
+    "accepted": true,
+    "steering_before": 0.7027027027027027,
+    "steering_after": 0.7761194029850748,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": -0.0444444444444444,
+      "df1": -0.022727272727272707
+     },
+     "SSN": {
+      "dp": 0.0230876865671642,
+      "dr": 0.0,
+      "df1": 0.020412371134020613
+     },
+     "ADDRESS": {
+      "dp": 1.0,
+      "dr": 1.0,
+      "df1": 1.0
+     }
+    },
+    "regex_added": [
+     "\\b\\d{1,6}\\s+[A-Za-z0-9\\.\\#\\-\\s,]+(?:Apt\\.?|Suite|Unit|Building|Rm\\.?)\\s*\\d+[A-Za-z0-9\\-\\s,]*,\\s+[A-Za-z\\s\\-\\.]+,?\\s+(?:AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MH|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|TX|UT|VT|VI|VA|WA|WV|WI|WY)\\s+\\d{5}(?:-\\d{4})?\\b|\\b\\d{1,6}\\s+[A-Za-z0-9\\.\\#\\-\\s]+(?:\\r?\\n|\\s+)[A-Za-z\\s\\-\\.]+,?\\s+(?:AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MH|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|TX|UT|VT|VI|VA|WA|WV|WI|WY)\\s+\\d{5}(?:-\\d{4})?\\b|\\b\\d{1,6}\\s+[A-Za-z0-9\\.\\#\\-]+(?:\\s+[A-Za-z0-9\\.\\#\\-]+){1,5},?\\s+[A-Za-z\\s\\-\\.]+,?\\s+(?:AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MH|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|TX|UT|VT|VI|VA|WA|WV|WI|WY)\\s+\\d{5}(?:-\\d{4})?\\b"
+    ],
+    "regex_removed": [],
+    "anomalies": []
+   },
+   {
+    "round": 10,
+    "target": "NAME",
+    "change": "Refine NAME patterns to support accented characters, hyphens, and multi-word surnames while excluding verb phrases like 'talking about' from capturing groups.",
+    "expected": "NAME F1 score should increase by reducing false positives on phrases like 'talking about' and capturing missed hyphenated or accented names.",
+    "accepted": true,
+    "steering_before": 0.7761194029850748,
+    "steering_after": 0.7782101167315175,
+    "label_deltas": {
+     "NAME": {
+      "dp": 0.18832533013205277,
+      "dr": -0.07500000000000007,
+      "df1": 0.015451498009637743
+     },
+     "EMAIL": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "PHONE": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "CREDIT_CARD": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "SSN": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     },
+     "ADDRESS": {
+      "dp": 0.0,
+      "dr": 0.0,
+      "df1": 0.0
+     }
+    },
+    "regex_added": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+(?!talking about)([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+(?:\\s+(?:van\\s+)?[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+(?:\\s+[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff\\-]+)?)\\b"
+    ],
+    "regex_removed": [
+     "(?:Regards,|Thanks,|Sincerely,|Best,)\\s*\\n+\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,2})\\b",
+     "\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\b(?:my\\s+(?:wife|husband|colleague|son|daughter|manager|partner))\\s+([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+(?:van\\s+)?[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b",
+     "\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b"
+    ],
+    "anomalies": [
+     "opposing"
+    ]
+   }
+  ],
+  "probes": [
+   {
+    "anomaly": "mismatch",
+    "target": "NAME",
+    "raw": "ROOT_CAUSE: The phrase \"I'm <<talking about>>\" matches the introduction pattern `I'm\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})` because \"talking about\" follows \"I'm\", and names with accented characters (e.g., 'Rosa-Maria') or compound names (e.g., 'Emilia Cerv\u00e1ntez') are missed due to restrictive character classes or incomplete capturing groups.\nRULE: Name regex patterns must explicitly exclude common verb phrases like \"talking about\" after \"I'm\" and include hyphenated surnames and accented characters in all name capturing groups.\nNEXT_EDIT: Refine the NAME_PATTERNS to exclude non-name phrases after \"I'm\" (such as \"talking about\") and update character classes to properly capture hyphenated names like 'Rosa-Maria'.\nACTION: KEEP_GOING",
+    "root_cause": "The phrase \"I'm <<talking about>>\" matches the introduction pattern `I'm\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})` because \"talking about\" follows \"I'm\", and names with accented characters (e.g., 'Rosa-Maria') or compound names (e.g., 'Emilia Cerv\u00e1ntez') are missed due to restrictive character classes or incomplete capturing groups.",
+    "rule": "Name regex patterns must explicitly exclude common verb phrases like \"talking about\" after \"I'm\" and include hyphenated surnames and accented characters in all name capturing groups.",
+    "next_edit": "Refine the NAME_PATTERNS to exclude non-name phrases after \"I'm\" (such as \"talking about\") and update character classes to properly capture hyphenated names like 'Rosa-Maria'.",
+    "action": "KEEP_GOING",
+    "round": 2,
+    "strikes": 2,
+    "status": "refuted"
+   },
+   {
+    "anomaly": "opposing",
+    "target": "NAME",
+    "raw": "ROOT_CAUSE: The introduction pattern `I'm` greedily captures non-name phrases like 'talking about' because the regex `\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b` allows any words instead of capitalized names. Simultaneously, several sign-off and hyphen patterns fail to match accented characters like 'Rosa-Maria' and full names preceded by specific punctuation or newlines.\nRULE: All NAME capture groups for introductions and third-party references must require capitalized words (`[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*`), while properly supporting hyphenated names and lowercase prefixes like `de la`.\nNEXT_EDIT: Update the `I'm` and introduction regex patterns to enforce proper capitalization for captured names and fix hyphenated name boundaries.\nACTION: KEEP_GOING",
+    "root_cause": "The introduction pattern `I'm` greedily captures non-name phrases like 'talking about' because the regex `\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b` allows any words instead of capitalized names. Simultaneously, several sign-off and hyphen patterns fail to match accented characters like 'Rosa-Maria' and full names preceded by specific punctuation or newlines.",
+    "rule": "All NAME capture groups for introductions and third-party references must require capitalized words (`[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*`), while properly supporting hyphenated names and lowercase prefixes like `de la`.",
+    "next_edit": "Update the `I'm` and introduction regex patterns to enforce proper capitalization for captured names and fix hyphenated name boundaries.",
+    "action": "KEEP_GOING",
+    "round": 3,
+    "strikes": 2,
+    "status": "refuted"
+   },
+   {
+    "anomaly": "recurrence",
+    "target": "NAME",
+    "raw": "ROOT_CAUSE: The `I'm` introduction pattern incorrectly captures non-name verb phrases like \"talking about\" because it permits any capitalized words after `I'm`, and several missed names fail because the third-party and sign-off patterns do not account for accented characters, hyphens, or multi-word names (e.g., 'Rosa-Maria', 'Emilia Cerv\u00e1ntez').\nRULE: Name regex patterns following introductions or third-party roles must explicitly restrict captured tokens to valid name characters (including hyphens and accents) while excluding common verb phrases like \"talking about\".\nNEXT_EDIT: Refine the introduction pattern to exclude \"talking about\" and update all name capturing groups to fully support accented and hyphenated names.\nACTION: KEEP_GOING",
+    "root_cause": "The `I'm` introduction pattern incorrectly captures non-name verb phrases like \"talking about\" because it permits any capitalized words after `I'm`, and several missed names fail because the third-party and sign-off patterns do not account for accented characters, hyphens, or multi-word names (e.g., 'Rosa-Maria', 'Emilia Cerv\u00e1ntez').",
+    "rule": "Name regex patterns following introductions or third-party roles must explicitly restrict captured tokens to valid name characters (including hyphens and accents) while excluding common verb phrases like \"talking about\".",
+    "next_edit": "Refine the introduction pattern to exclude \"talking about\" and update all name capturing groups to fully support accented and hyphenated names.",
+    "action": "KEEP_GOING",
+    "round": 4,
+    "strikes": 0,
+    "status": "supported"
+   },
+   {
+    "anomaly": "mismatch",
+    "target": "PHONE",
+    "raw": "ROOT_CAUSE: The current PHONE regex overly matches 10-digit numbers (like order numbers) because it does not require international country codes, punctuation separators, or preceding contact context, causing massive false positives.\nRULE: The PHONE pattern must require either an explicit international prefix (+1, +44, +91) or strict phone punctuation/separators (dashes, dots, parentheses, or spaces between digit groups) to avoid matching 10-digit order numbers.\nNEXT_EDIT: Refine the PHONE regex pattern to mandate standard phone separators or international country codes while retaining support for all required formats (intl_uk, paren, intl_in, dot, dash, plus1, bare, space).\nACTION: KEEP_GOING",
+    "root_cause": "The current PHONE regex overly matches 10-digit numbers (like order numbers) because it does not require international country codes, punctuation separators, or preceding contact context, causing massive false positives.",
+    "rule": "The PHONE pattern must require either an explicit international prefix (+1, +44, +91) or strict phone punctuation/separators (dashes, dots, parentheses, or spaces between digit groups) to avoid matching 10-digit order numbers.",
+    "next_edit": "Refine the PHONE regex pattern to mandate standard phone separators or international country codes while retaining support for all required formats (intl_uk, paren, intl_in, dot, dash, plus1, bare, space).",
+    "action": "KEEP_GOING",
+    "round": 6,
+    "strikes": 0,
+    "status": "supported"
+   }
+  ],
+  "memory": [
+   {
+    "anomaly": "mismatch",
+    "target": "NAME",
+    "raw": "ROOT_CAUSE: The phrase \"I'm <<talking about>>\" matches the introduction pattern `I'm\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})` because \"talking about\" follows \"I'm\", and names with accented characters (e.g., 'Rosa-Maria') or compound names (e.g., 'Emilia Cerv\u00e1ntez') are missed due to restrictive character classes or incomplete capturing groups.\nRULE: Name regex patterns must explicitly exclude common verb phrases like \"talking about\" after \"I'm\" and include hyphenated surnames and accented characters in all name capturing groups.\nNEXT_EDIT: Refine the NAME_PATTERNS to exclude non-name phrases after \"I'm\" (such as \"talking about\") and update character classes to properly capture hyphenated names like 'Rosa-Maria'.\nACTION: KEEP_GOING",
+    "root_cause": "The phrase \"I'm <<talking about>>\" matches the introduction pattern `I'm\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})` because \"talking about\" follows \"I'm\", and names with accented characters (e.g., 'Rosa-Maria') or compound names (e.g., 'Emilia Cerv\u00e1ntez') are missed due to restrictive character classes or incomplete capturing groups.",
+    "rule": "Name regex patterns must explicitly exclude common verb phrases like \"talking about\" after \"I'm\" and include hyphenated surnames and accented characters in all name capturing groups.",
+    "next_edit": "Refine the NAME_PATTERNS to exclude non-name phrases after \"I'm\" (such as \"talking about\") and update character classes to properly capture hyphenated names like 'Rosa-Maria'.",
+    "action": "KEEP_GOING",
+    "round": 2,
+    "strikes": 2,
+    "status": "refuted"
+   },
+   {
+    "anomaly": "opposing",
+    "target": "NAME",
+    "raw": "ROOT_CAUSE: The introduction pattern `I'm` greedily captures non-name phrases like 'talking about' because the regex `\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b` allows any words instead of capitalized names. Simultaneously, several sign-off and hyphen patterns fail to match accented characters like 'Rosa-Maria' and full names preceded by specific punctuation or newlines.\nRULE: All NAME capture groups for introductions and third-party references must require capitalized words (`[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*`), while properly supporting hyphenated names and lowercase prefixes like `de la`.\nNEXT_EDIT: Update the `I'm` and introduction regex patterns to enforce proper capitalization for captured names and fix hyphenated name boundaries.\nACTION: KEEP_GOING",
+    "root_cause": "The introduction pattern `I'm` greedily captures non-name phrases like 'talking about' because the regex `\\b(?:my name is|I am|I'm|This is|hey its)\\s+([A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Za-z\u00e0-\u00f6\u00f8-\u00ff]+){1,3})\\b` allows any words instead of capitalized names. Simultaneously, several sign-off and hyphen patterns fail to match accented characters like 'Rosa-Maria' and full names preceded by specific punctuation or newlines.",
+    "rule": "All NAME capture groups for introductions and third-party references must require capitalized words (`[A-Z\u00c0-\u00d6\u00d8-\u00df][a-z\u00e0-\u00f6\u00f8-\u00ff]*`), while properly supporting hyphenated names and lowercase prefixes like `de la`.",
+    "next_edit": "Update the `I'm` and introduction regex patterns to enforce proper capitalization for captured names and fix hyphenated name boundaries.",
+    "action": "KEEP_GOING",
+    "round": 3,
+    "strikes": 2,
+    "status": "refuted"
+   },
+   {
+    "anomaly": "recurrence",
+    "target": "NAME",
+    "raw": "ROOT_CAUSE: The `I'm` introduction pattern incorrectly captures non-name verb phrases like \"talking about\" because it permits any capitalized words after `I'm`, and several missed names fail because the third-party and sign-off patterns do not account for accented characters, hyphens, or multi-word names (e.g., 'Rosa-Maria', 'Emilia Cerv\u00e1ntez').\nRULE: Name regex patterns following introductions or third-party roles must explicitly restrict captured tokens to valid name characters (including hyphens and accents) while excluding common verb phrases like \"talking about\".\nNEXT_EDIT: Refine the introduction pattern to exclude \"talking about\" and update all name capturing groups to fully support accented and hyphenated names.\nACTION: KEEP_GOING",
+    "root_cause": "The `I'm` introduction pattern incorrectly captures non-name verb phrases like \"talking about\" because it permits any capitalized words after `I'm`, and several missed names fail because the third-party and sign-off patterns do not account for accented characters, hyphens, or multi-word names (e.g., 'Rosa-Maria', 'Emilia Cerv\u00e1ntez').",
+    "rule": "Name regex patterns following introductions or third-party roles must explicitly restrict captured tokens to valid name characters (including hyphens and accents) while excluding common verb phrases like \"talking about\".",
+    "next_edit": "Refine the introduction pattern to exclude \"talking about\" and update all name capturing groups to fully support accented and hyphenated names.",
+    "action": "KEEP_GOING",
+    "round": 4,
+    "strikes": 0,
+    "status": "supported"
+   },
+   {
+    "anomaly": "mismatch",
+    "target": "PHONE",
+    "raw": "ROOT_CAUSE: The current PHONE regex overly matches 10-digit numbers (like order numbers) because it does not require international country codes, punctuation separators, or preceding contact context, causing massive false positives.\nRULE: The PHONE pattern must require either an explicit international prefix (+1, +44, +91) or strict phone punctuation/separators (dashes, dots, parentheses, or spaces between digit groups) to avoid matching 10-digit order numbers.\nNEXT_EDIT: Refine the PHONE regex pattern to mandate standard phone separators or international country codes while retaining support for all required formats (intl_uk, paren, intl_in, dot, dash, plus1, bare, space).\nACTION: KEEP_GOING",
+    "root_cause": "The current PHONE regex overly matches 10-digit numbers (like order numbers) because it does not require international country codes, punctuation separators, or preceding contact context, causing massive false positives.",
+    "rule": "The PHONE pattern must require either an explicit international prefix (+1, +44, +91) or strict phone punctuation/separators (dashes, dots, parentheses, or spaces between digit groups) to avoid matching 10-digit order numbers.",
+    "next_edit": "Refine the PHONE regex pattern to mandate standard phone separators or international country codes while retaining support for all required formats (intl_uk, paren, intl_in, dot, dash, plus1, bare, space).",
+    "action": "KEEP_GOING",
+    "round": 6,
+    "strikes": 0,
+    "status": "supported"
+   }
+  ],
+  "curve": [
+   {
+    "round": 0,
+    "steering": 0.2694300518134715,
+    "heldout": 0.27083333333333337
+   },
+   {
+    "round": 1,
+    "steering": 0.6937269372693728,
+    "heldout": 0.7061477721376198
+   },
+   {
+    "round": 2,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 3,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 4,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 5,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 6,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 7,
+    "steering": 0.6950354609929078,
+    "heldout": 0.7000000000000001
+   },
+   {
+    "round": 8,
+    "steering": 0.7027027027027027,
+    "heldout": 0.6903614457831325
+   },
+   {
+    "round": 9,
+    "steering": 0.7761194029850748,
+    "heldout": 0.7779043280182232
+   },
+   {
+    "round": 10,
+    "steering": 0.7782101167315175,
+    "heldout": 0.7906698564593302
+   }
+  ]
+ }
+}

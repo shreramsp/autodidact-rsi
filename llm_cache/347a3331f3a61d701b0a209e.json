@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "ROOT_CAUSE: The fourth NAME pattern (`\\n\\s*-\\s*([A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+(?:\\s+[A-Z][a-z\u00e0-\u00f6\u00f8-\u00ff]+)?)\\b`) incorrectly matches the verb phrase \"talking about\" after \"I'm\", while failing to match multi-word names with special characters like accented letters or hyphens (e.g., 'Rosa-Maria', 'Emilia Cerv\u00e1ntez') because it restricts characters to uppercase/lowercase ASCII/accented ranges without punctuation or lowercase support.\nRULE: All NAME regex patterns must explicitly anchor full names with proper character classes (including hyphens and lowercase support) and avoid overly broad prepositional or verb phrase matches like \"I'm [verb/adverb]\".\nNEXT_EDIT: Fix the signature dash pattern and third-party relationship patterns to correctly capture multi-word names with hyphens and accented characters while tightening the intro pattern to exclude verb phrases like 'talking about'.",
+ "input_tokens": 2861,
+ "output_tokens": 210,
+ "cost_usd": 0.0013833
+}

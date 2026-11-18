@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "ROOT_CAUSE: The introduction and relationship patterns fail because they incorrectly capture the verb phrase 'talking about' as a name group or miss valid names due to overly strict character casing and missing context markers like 'I\\'m'.\nRULE: Name regex patterns must use explicit anchor words for relationships and introductions (e.g., 'wife', 'husband', 'colleague', 'son', 'daughter', 'manager', 'partner', 'I\\'m', 'name is', 'Regards,', 'Thanks,') followed by names that properly match accented and hyphenated characters without matching verb phrases.\nNEXT_EDIT: Fix the third-party relationship and introduction patterns in NAME_PATTERNS to prevent capturing 'talking about' and ensure full name capture for accented and hyphenated names.",
+ "input_tokens": 3034,
+ "output_tokens": 159,
+ "cost_usd": 0.0013076999999999997
+}

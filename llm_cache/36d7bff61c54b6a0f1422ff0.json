@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "text": "ROOT_CAUSE: The introduction pattern `I'm` greedily captures the phrase \"I'm <<talking about>>\" across multiple lines due to lack of line-boundary or token constraints, while name patterns fail on international/hyphenated characters and lowercase initials.\nRULE: Name patterns must restrict capture groups to explicit capitalized word sequences, exclude common conversational verbs like \"talking about\", and support hyphenated or accented name components correctly.\nNEXT_EDIT: Fix the greedy `I'm` pattern to prevent matching \"I'm talking about\" and update name regexes to properly capture hyphenated and accented surnames.",
+ "input_tokens": 2594,
+ "output_tokens": 127,
+ "cost_usd": 0.0010956999999999998
+}
